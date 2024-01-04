@@ -22,9 +22,9 @@ function(arr) { //here arr is path of d array,
     Dutch Flag Problem : sort 0 1 2
 
 Pending Question 
-1) Square root using binary search
-2) find pivot in indx
-3) Book Allocation program (imp) Lecture = 15
+1) Square root using binary search : D
+2) find pivot in indx : D
+3) Book Allocation program (imp) Lecture = 15 : D
 4) Merge two sort array 
 
 # Selection sort 
@@ -59,10 +59,10 @@ https://www.geeksforgeeks.org/return-maximum-occurring-character-in-the-input-st
 Replace spaces from a string with @40
 Remove all occurence of substring in a string
 
-Spiral problem (imp)
-Rotate matrix by 90 degree
-search a 2d array (sorted)
-search a 2d matrix (unsorted)
+Spiral problem (imp): D
+Rotate matrix by 90 degree : D
+search a 2d array (sorted) : D
+search a 2d matrix (unsorted) : D
 
 Has to solve 10 question in matrix*
 

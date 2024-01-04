@@ -1,28 +1,30 @@
 /**
- * merge sort
+ * return total swap to make array sorted is known inversion count
  */
 
 
-var arr = [12, 11, 13, 5, 6, 7];
+var arr = [8, 4, 2, 1];
 
 let start = 0;
 let end = arr.length
 
 console.log('original array', arr)
-mergeSort(arr, start, end-1)
-console.log('new array', arr)
+console.log('inversion count', mergeSort(arr, start, end-1))
+console.log('inversion count', arr)
 
 function mergeSort(arr, l, r){
-    if(l >= r) return arr
-
+    
+    if(l >= r) return 0;
+    let swap = 0;
     let mid = l + parseInt( (r-l)/2)
-    mergeSort(arr, l ,mid)
-    mergeSort(arr, mid+1, r)
-    return merge(arr, l, r)
+    swap += mergeSort(arr, l ,mid)
+    swap += mergeSort(arr, mid+1, r)
+    return merge(arr, l, r, swap)
+    
 }
 
 
-function merge(arr, start, end) {
+function merge(arr, start, end, swap) {
 
     let arr1 = [];
     let arr2 = [];
@@ -45,6 +47,10 @@ function merge(arr, start, end) {
             i++;
         } else {
             arr[mainindex] = arr2[j];
+            // all element in right side of array1 will be greater then element of second array ,so increase inde
+            for(let a = i; a < arr1.length; a++){
+                swap++;
+            }
             j++;
         }
         mainindex++;
@@ -59,4 +65,5 @@ function merge(arr, start, end) {
         j++;
         mainindex++;
     }
+    return swap;
 }

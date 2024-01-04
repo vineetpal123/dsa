@@ -57,20 +57,28 @@ console.log('res1 : ', res1)
 
 
 console.log('input', input)
-function rotateMatrixBestApproch(input) {
-  let n = input.length
-  let total = n * n;
-  let count = 1;
 
-  for (let c = 0; c < n; c++) {
-    //let temp = input[r]
-
-    for (let r = 0; r < n; r++) {
-      let temp = input[c][r]
-      input[c][r] = input[r][c]
-      input[r][c] = temp
-      console.log('col', input[r][c])
-    }  
+function rotateMatrixBestApproch(arr){
+  let row = arr.length -1;
+  let col = arr[0].length -1
+  for(let r=0; r <= row; r++ ){
+    for(let c = r; c <= col; c++){
+      let temp = arr[r][c] 
+      arr[r][c] = arr[c][r] 
+      arr[c][r] = temp;
+    }
   }
-  
+  for(let r=0; r <= row; r++ ){
+    reverseArr(arr[r], 0, arr[r].length-1)
+  }
 }
+function reverseArr(arr, start, end){
+  while (start < end){
+    let temp = arr[start];
+    arr[start] = arr[end]
+    arr[end] = temp; 
+    start++;
+    end--;
+  }
+}
+console.log('input', input)
