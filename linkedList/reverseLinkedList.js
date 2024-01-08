@@ -1,49 +1,40 @@
 let input = {
-    "head": {
+  "head": {
       "val": 20,
       "next": {
-        "val": 30,
-        "next": {
-            "val": 40,
-            "next": null
+          "val": 30,
+          "next": {
+              "val": 40,
+              "next": null
           }
       }
-    },
-    "size": 3
-  }
-
-function recursive(head, current, prev){
-    forward = current.next ;
-    current.next = prev;
-    prev = current
-    if(forward == null){
-        head = prev;
-        return head;
-    }
-    return recursive(head, forward, prev)
-}  
-//let op1 = recursive(input.head, input.head, null)
-//console.log('op', JSON.stringify(op1))
+  },
+  "size": 3
+}
 
 function reverseList(input){
-    let first = input.head;
-    let second = first.next
-    while(second){
-        let temp = second.next
-        second.next = first
-        first = second
-        second = temp
-    }
+  let current = input.head;
+  let prev = null;
+  while(current){
+      let forward = current.next;
+      current.next = prev;
+      prev = current;
+      current = forward;
+  }
+  return prev;
+}
+//console.log('reverse list', reverseList(input));
 
-    input.head.next = null
-    input.head = first
-    return input
-} 
+function recursive(head, current, prev){
+  if(current == null) {
+      return prev;
+  }
+  let forward = current.next;
+  current.next = prev;
+  prev = current;
+  current = forward;
+  return recursive(head, current, prev);
+}
 
-let op = reverseList(input)
-console.log('op', JSON.stringify(op))
-
-1 -> 2 -> 3
- 
- 
+console.log('reverse list recursive', recursive(input.head, input.head, null));
 

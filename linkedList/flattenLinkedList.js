@@ -1,111 +1,87 @@
-
-
-
 class Node {
     constructor(x) {
-      this.data = x;
+      this.val = x;
       this.next = null;
       this.down = null;
     }
 }
-  
 
-function flatten(node){
-    if(node == null) return node
-
-    let current = node
-    //let mid = findMid(node)
-    //let temp = mid.next
-    //mid.next = null;
-    let temp = current
-    let r = current.next
-    let down = temp
-    down.next = null
-    let right = flatten(r);
-    down = convertDownIntoNext(down);
-    let ans = merge(down, right)
-    return ans
-}
-
-function convertDownIntoNext(down){
-    let current = down
-    let newLinkedList = null;
-    let temp = newLinkedList
-    while(current){
-        if(!newLinkedList){
-            newLinkedList = new Node(current.data)
-            temp = newLinkedList
-            delete temp.down
-        }else{
-            temp.next = new Node(current.data)
-            delete temp.next.down
-            temp = temp.next;
+let input = {
+    "head": {
+        "val": 10,
+        "next": {
+            "val": 30,
+            "next": {
+                "val": 40,
+                "next": {
+                    "val": 50,
+                    "next": {
+                        "val": 60,
+                        "next": null
+                    }
+                }
+            }
         }
-        current = current.down
-    }
-    return newLinkedList;
+    },
+    "size": 4
+}
+let input2 = {
+    "head": {
+        "val": 5,
+        "next": {
+            "val": 25,
+            "next": {
+                "val": 35,
+                "next": {
+                    "val": 70,
+                    "next": {
+                        "val": 90,
+                        "next": null
+                    }
+                }
+            }
+        }
+    },
+    "size": 4
 }
 
-function merge(left, right){
-    if(!left) return right
-    if(!right) return left
-    let ans = null;
-    let temp = ans
-    while(left !=null || right!= null){
-
-        if(left && right &&  'data' in left && 'data' in right){
-            if(left.data <= right.data ){
-                if(!ans){
-                    ans = new Node(left.data);
-                    temp = ans;
-                    delete temp.down
-                }else{
-                    temp.next = new Node(left.data)
-                    delete temp.next.down
-                    temp = temp.next;
-                }
-                left = left.next
-            }else if(right.data <= left.data){
-                if(!ans){
-                    ans = new Node(right.data);
-                    temp = ans;
-                    delete temp.down
-                }else{
-                    temp.next = new Node(right.data)
-                    delete temp.next.down
-                    temp = temp.next;
-                }
-                right = right.next
-            }
-        }else if(!left){
-            if(!ans){
-                ans = new Node(right.data);
-                temp = ans;
-                delete temp.down
-            }else{
-                temp.next = new Node(right.data)
-                delete temp.next.down
-                temp = temp.next;
-            }
-            right = right.next
-        }else if(!right){
-            if(!ans){
-                ans = new Node(left.data);
-                temp = ans;
-                delete temp.down
-            }else{
-                temp.next = new Node(left.data)
-                delete temp.next.down
-                temp = temp.next;
-            }
-            left = left.next
+function merge(head1, head2){
+    let l3 = new Node(0);
+    let temp3 = l3;
+    let temp1 = head1;
+    let temp2 = head2;
+    while(temp1 != null && temp2 != null){
+        if(temp1.val < temp2.val){
+            temp3.next = new Node(temp1.val);
+            temp3 = temp3.next;
+            temp1 = temp1.next;
+        } else if(temp1.val > temp2.val) {
+            temp3.next = new Node(temp2.val);
+            temp3 = temp3.next;
+            temp2 = temp2.next;
+        } else{
+            temp3.next = new Node(temp1.val);
+            temp3 = temp3.next;
+            temp1 = temp1.next;
+            temp2 = temp2.next;
         }
     }
-    return ans;
-    //console.log('ans', ans)
+
+    while(temp1 != null){
+        temp3.next = new Node(temp1.val);
+        temp3 = temp3.next;
+        temp1 = temp1.next;
+    }
+    while(temp2 != null){
+        temp3.next = new Node(temp2.val);
+        temp3 = temp3.next;
+        temp2 = temp2.next;
+    }
+    l3 = l3.next;
+    return l3;
 }
 
-// Creating a linked list with random pointer
+
 const head = new Node(3);
 head.next = new Node(10);
 head.next.next = new Node(7);
@@ -117,6 +93,35 @@ head.next.next.down = new Node(15);
 head.next.next.down.down = new Node(30);
 head.next.next.next.down = new Node(22);
 
-console.log('original linked list', JSON.stringify(head))
-let newLinkedList = flatten(head)
-console.log('new linked list', JSON.stringify(newLinkedList))
+function flattenList(head){
+
+    if(head == null) return head;
+
+    let downList = head;
+    let tDownList = downList;
+    let tempDownList = head;
+    let rightNode = head.next;
+   
+    while(tempDownList.down){
+        tDownList.down = tempDownList.down;
+        tDownList = tDownList.down;
+        tempDownList = tempDownList.down;
+    }
+    downList.next = null;
+    downList = convertDownIntoNext(downList);
+
+    let rightList = flattenList(rightNode);
+    return merge(downList, rightList);
+}
+
+function convertDownIntoNext(head){
+    let temp = head;
+    while(temp){
+        temp.next = temp.down;
+        delete temp.down;
+        temp = temp.next;
+    }
+    console.log('donwlist converted')
+    return head;
+}
+console.log('flattenList', flattenList(head));
