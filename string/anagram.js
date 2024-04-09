@@ -19,3 +19,5 @@ An Anagram is a word or phrase formed by rearranging the letters of a different 
     if (!Object.values(obj).some(e => e !== 0)) return true;
     return false;
 };
+
+console.log('isAnagram', isAnagram('anagram', 'nagaram'));

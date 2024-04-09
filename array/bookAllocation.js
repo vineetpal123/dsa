@@ -1,45 +1,43 @@
-let books = [10, 20, 30, 60]
-let student = 2;
+/***
+ * Book allocation problem
+ * Given that there are N books and M students. Also given are the number of pages in each book in ascending order. The task is to assign books in such a way that the maximum number of pages assigned to a student is minimum, with the condition that every student is assigned to read some consecutive books. Print that minimum number of pages.
+ */
 
-function main (books, student){
-    let start = 0;
-    let end = 0;
-    for (let i = 0; i < books.length; i++) {
-        end += books[i];
-    }
-    let mid = Math.floor(start + (end -start)/2);
+let arr = [12, 34, 67, 90];
+let m = 2;
+
+function bookAllocation(arr, student) {
+    let start = 0; // just for simplicity we are using 0 ,we can also choose min element of array
+    let end = arr.reduce((a, b) => a + b);
+
+    // search space : 0 to 100 ans lies between 0 to 100
+    let mid = Math.floor(start + (end - start) / 2);
     let ans = -1;
-    while( start < end) {
-        let isPossible = checkIfPossible(books, student, mid);
-        if(!isPossible) {
-            start = mid + 1;
-        } else {
+    while (start < end) {
+        if (isPossibleAllocation(arr, mid, student)) {
             ans = mid;
-            end = mid -1
+            end = mid - 1;
+        } else {
+            start = mid + 1;
         }
-        mid = Math.floor(start + (end -start)/2);
+        mid = Math.floor(start + (end - start) / 2);
     }
     return ans;
 }
 
-console.log('book allocation', main(books, student));
-
-function checkIfPossible(books, student, value){
-    
-    let studentCnt = 1;
-    let allocation = 0;
-    
-    for(let i = 0; i < books.length; i++){
+function isPossibleAllocation(arr, mid, student) {
+    let pages = 0;
+    let counter = 0;
+    for (let i = 0; i < arr.length; i++) {
         
-        if (allocation + books[i] <= value) {
-            allocation = allocation + books[i];
-        }else{
-            studentCnt++;
-            if (studentCnt > student || books[i] > value ) {
-                return false
-            }
-            allocation = books[i];
+        if (pages + arr[i] > mid) {
+            counter++;
+            pages = 0;
         }
+        pages += arr[i];
     }
-    return true
+    if (counter == student -1 ) return true;
+    return false;
 }
+
+console.log('allocate book', bookAllocation(arr, m));

@@ -19,15 +19,15 @@ let input = {
 }
 
 console.log('middle element', findMid(input.head));  
-function findMid(head){
-  let begineer = head;
-  let pro = head;
-
-  while(pro && pro.next){
-      begineer = begineer.next;
-      pro = pro.next.next || null;
-  }
-  return begineer.val;
+function getMidElement(head) {
+    let current = head;
+    let fastPointer = current;
+    let slowPointer = current;
+    while (fastPointer.next && slowPointer.next) {
+        fastPointer = fastPointer.next.next || fastPointer.next;
+        slowPointer = slowPointer.next;
+    }
+    return slowPointer.val;
 }
 
 //console.log('middle element', findMidByBruteForce(input.head));

@@ -1,49 +1,54 @@
-let arr = [ 7, 9, 1, 2, 3]
+function getPivot(arr){
+    let start = 0;
+    let end = arr.length;
+    let mid = Math.floor(start + (end - start)/2);
 
-m > 0 && m <= k
-r = m- 1 
-
-m < 0 && m <= k
-
-// l = 0
-// r = 5 
-// m = 2
-
-// k = 3 
-// k >= l 
-// r = m -1 
-
-// k <=
-
-let index = rotatedArray(arr, 3);
-
-
-function rotatedArray(arr, key) {
-    let l = 0;
-    let r = arr.length
-    let m = Math.floor(l + (r - l) / 2)
-
-    while (l <= r) {
-        if ( arr[m] === key) {
-            return m
-        }
-        else if (arr[l] >= key) {
-            r = m - 1
-            if(r === -1){
-                console.log('inside')
-                l = 0
-                r = arr.length
-                m = Math.floor(l + (r - l) / 2)
-                l = m+1
+    while(start <= end){
+        if(arr[mid] > arr[mid+1]){
+            return mid;
+        } else {
+            // if mid is greater then last
+            if(arr[mid] <= arr[arr.length-1]){
+                end = mid -1;
+            }else{
+                start = mid +1;
             }
+            mid = Math.floor(start + (end - start)/2);
         }
-        else if (arr[r] >= key) {
-            l = m + 1
-        }
-        m = Math.floor(l + (r - l) / 2)
     }
     return -1
 }
 
+function binarySearch(arr, start, end, target){
+    let mid = Math.floor(start + (end -start)/2);
 
+    while(start <= end){
+        if(arr[mid] == target) return mid;
 
+        if(arr[mid] < target){
+            start = mid +1;
+        }else{
+            end = mid -1;
+        }
+        mid = Math.floor(start + (end -start)/2);
+    }
+    return -1;
+}
+
+function search(arr, target){
+    if(arr.length == 1 && arr[0] == target) return 0;
+    let pivot = getPivot(arr);
+    if(pivot == -1) return binarySearch(arr, 0, arr.length, target); 
+
+    if(arr[pivot] == target) return pivot;
+
+    if(target <= arr[arr.length-1]){
+        return binarySearch(arr, pivot +1, arr.length, target);
+    }else{
+        return binarySearch(arr, 0, pivot-1, target);
+    }
+}
+
+let arr = [4,5,6,7,0,1,2];
+let target = 0;
+console.log('get pivot', search(arr, target));

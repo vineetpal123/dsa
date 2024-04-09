@@ -1,36 +1,42 @@
-let stall = [4, 2, 1, 3, 6]
-let cow = 2;
+/***
+ * Book allocation problem
+ * Given that there are N books and M students. Also given are the number of pages in each book in ascending order. The task is to assign books in such a way that the maximum number of pages assigned to a student is minimum, with the condition that every student is assigned to read some consecutive books. Print that minimum number of pages.
+ */
 
-// placed cows in stall with longest distance 
+let arr = [2, 12, 11, 3, 7, 26];
+let m = 5;
 
-function main (stall, cow){
+function aggressiveCow(arr, cow) {
+    arr = arr.sort((a, b) => a-b);
     let start = 0;
-    let end = stall.length;
-   
-    let mid = Math.floor(start + (end -start)/2);
+    let end = arr[arr.length -1];
     let ans = -1;
-    while( start < end) {
-        let isPossible = checkIfPossible(stall, cow, mid);
-        if(!isPossible) {
-            end = mid - 1;
-        } else {
+    let mid = Math.floor(start + (end-start)/2);
+    while(start <= end){
+        if(isPossibleAllocation(arr, mid, cow)){
             ans = mid;
-            start = mid + 1
+            start = mid+1;
+        } else{
+            end = mid-1;
         }
-        mid = Math.floor(start + (end -start)/2);
+        mid = Math.floor(start + (end-start)/2);
     }
     return ans;
 }
 
-console.log('cow longest location', main(stall, cow));
-
-function checkIfPossible(stall, cow, mid){
-    
-    let distance = 0;
-    
-    for(let i = 0; i < stall.length; i++){
-        distance = stall[i] - mid
-        if (distance >= mid) return true;
+function isPossibleAllocation(arr, mid, cow) {
+    let firstPos = arr[0];
+    let counter = 1;
+    let distance = firstPos + mid;
+    for (let i = 1; i < arr.length; i++) {
+        
+        if (arr[i] >= distance) {
+            counter++;
+            distance = arr[i] + mid;
+        }
     }
-    return false
+    if (counter >= cow ) return true;
+    return false;
 }
+
+console.log('allocate book', aggressiveCow(arr, m));

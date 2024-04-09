@@ -8,33 +8,31 @@ let arr = [1,1,1, 2, 1, 0, 2, 1, 0, 0,1,1]
 // m = 4
 // r = 5
 
-function main(arr) {
-    let l = 0 // it will store 0 , L0 ------Ln-1
-    let m = 0 // it will store 1 , mn -----------mn-1
-    let r = arr.length - 1 // it will store 2 mn ----- rn-1
+function main(a){
+    let low = 0; // it will save 0 element
+    let mid = 0; // it will save mid element which is 1
+    let high = a.length -1; // it will save high element which is 2
 
-    while (m <= r) {
-        if (arr[l] === 0) {
-            l++;
-            m++;
-        } else if (arr[m] === 2 && m <= r) {
-            let temp = arr[m]
-            arr[m] = arr[r]
-            arr[r] = temp
+    while(mid <= high){
+        if(a[low] == 0){
+            low++;
+            mid++;
+        } else if(a[mid] == 2){
+            let temp = a[mid];
+            a[mid] = a[high];
+            a[high] = temp;
+            high--; 
+        } else if(a[mid] == 0){
+            let temp = a[mid];
+            a[mid] = a[low];
+            a[low] = temp;
 
-            r--
-        } else if (arr[m] === 0) {
-            let temp = arr[m]
-            arr[m] = arr[l]
-            arr[l] = temp
-
-            l++
-            m++
-        }
-        else if (arr[m] == 1) {
-            m++;
+            low++;
+            mid++;
+        } else if(a[mid] == 1){
+            mid++;
         }
     }
-    console.log('arr', arr)
+    return a;
 }
 main(arr)

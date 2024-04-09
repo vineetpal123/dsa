@@ -3,7 +3,7 @@
 
 Given an integer n, return all distinct solutions to the n-queens puzzle. You may return the answer in any order.
  */
-let res = nqueen(8)
+let res = nqueen(4)
 console.log('queen placement', JSON.stringify(res));
 
 function nqueen(n){

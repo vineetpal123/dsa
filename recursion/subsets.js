@@ -7,25 +7,24 @@ The solution set must not contain duplicate subsets. Return the solution in any 
  */
 console.log('subsets are', JSON.stringify(subsets([1,2,3])))
 
-function subsets(nums){
-    let ans = [];
+function subsets(arr){
     let output = [];
-    let index = 0;
-    solve(nums, output, index, ans);
-    return ans;
+    let start = 0;
+    let ans = [];
+    solve(arr, start, ans, output);
+    return output;
 }
 
-function solve(nums, [...output], index, ans){
-    if(index >= nums.length){
-        ans.push(output);
+function solve(arr, start, [...ans], output){
+    if(start >= arr.length ){
+        output.push(ans)
         return;
     }
-
+    
     // exclude
-    solve(nums, output, index+1, ans);
+    solve(arr, start+1, ans, output);
 
-    // include 
-    let element = nums[index];
-    output.push(element);
-    solve(nums, output, index+1, ans)
+    // include
+    ans.push(arr[start]);
+    solve(arr, start +1, ans, output)
 }

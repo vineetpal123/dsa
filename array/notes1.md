@@ -142,3 +142,9 @@ check factorial question
 
 
 0+2 1+2+2 2+5+2
+
+Binary search advanced question
+
+painter partition
+book allocation
+aggressive cows
